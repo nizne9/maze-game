@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>A Maze Game Based on Face Orientation Detection</title>
+    <style>
+        #game-container {
+            position: relative;
+            width: 1920px;
+            height: 1080px;
+            border: 1px solid black;
+        }
+
+        #ball {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game-container">
+        <div id="ball"></div>
+    </div>
+
+    <script>
+        // 获取游戏容器和小球元素
+        const gameContainer = document.getElementById('game-container');
+        const ball = document.getElementById('ball');
+
+        // 监听后端发送的移动指令
+        const socket = new WebSocket('ws://localhost:8000/ws/move');
+
+        socket.onmessage = (event) => {
+            const direction = event.data;
+
+            // 根据移动指令控制小球的移动
+            if (direction === 'up') {
+                moveUp();
+            } else if (direction === 'down') {
+                moveDown();
+            } else if (direction === 'left') {
+                moveLeft();
+            } else if (direction === 'right') {
+                moveRight();
+            }
+        };
+
+        // 小球向上移动
+        function moveUp() {
+            const top = parseInt(ball.style.top) || 0;
+            ball.style.top = (top - 10) + 'px';
+        }
+
+        // 小球向下移动
+        function moveDown() {
+            const top = parseInt(ball.style.top) || 0;
+            ball.style.top = (top + 10) + 'px';
+        }
+
+        // 小球向左移动
+        function moveLeft() {
+            const left = parseInt(ball.style.left) || 0;
+            ball.style.left = (left - 10) + 'px';
+        }
+
+        // 小球向右移动
+        function moveRight() {
+            const left = parseInt(ball.style.left) || 0;
+            ball.style.left = (left + 10) + 'px';
+        }
+    </script>
+</body>
+
+</html>
