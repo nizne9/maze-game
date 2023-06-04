@@ -1,11 +1,14 @@
-.bootstrap-select.btn-group,.bootstrap-select.btn-group[class*="span"] {
+.bootstrap-select.btn-group,
+.bootstrap-select.btn-group[class*="span"] {
     float: none;
     display: inline-block;
     margin-bottom: 10px;
     margin-left: 0
 }
 
-.form-search .bootstrap-select.btn-group,.form-inline .bootstrap-select.btn-group,.form-horizontal .bootstrap-select.btn-group {
+.form-search .bootstrap-select.btn-group,
+.form-inline .bootstrap-select.btn-group,
+.form-horizontal .bootstrap-select.btn-group {
     margin-bottom: 0
 }
 
@@ -14,7 +17,9 @@
     border: 0
 }
 
-.bootstrap-select.btn-group.pull-right,.bootstrap-select.btn-group[class*="span"].pull-right,.row-fluid .bootstrap-select.btn-group[class*="span"].pull-right {
+.bootstrap-select.btn-group.pull-right,
+.bootstrap-select.btn-group[class*="span"].pull-right,
+.row-fluid .bootstrap-select.btn-group[class*="span"].pull-right {
     float: right
 }
 
@@ -76,7 +81,8 @@
     vertical-align: middle
 }
 
-.bootstrap-select.btn-group>.disabled,.bootstrap-select.btn-group .dropdown-menu li.disabled>a {
+.bootstrap-select.btn-group>.disabled,
+.bootstrap-select.btn-group .dropdown-menu li.disabled>a {
     cursor: not-allowed
 }
 
@@ -154,9 +160,10 @@
     padding-left: .5em
 }
 
-.bootstrap-select.btn-group .dropdown-menu li:not(.disabled)>a:hover small,.bootstrap-select.btn-group .dropdown-menu li:not(.disabled)>a:focus small {
+.bootstrap-select.btn-group .dropdown-menu li:not(.disabled)>a:hover small,
+.bootstrap-select.btn-group .dropdown-menu li:not(.disabled)>a:focus small {
     color: #64b1d8;
-    color: rgba(255,255,255,0.4)
+    color: rgba(255, 255, 255, 0.4)
 }
 
 .bootstrap-select.btn-group .dropdown-menu li>dt small {
@@ -169,7 +176,7 @@
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
     border-bottom: 7px solid #CCC;
-    border-bottom-color: rgba(0,0,0,0.2);
+    border-bottom-color: rgba(0, 0, 0, 0.2);
     position: absolute;
     bottom: -4px;
     left: 9px;
@@ -193,7 +200,7 @@
     top: -3px;
     border-top: 7px solid #ccc;
     border-bottom: 0;
-    border-top-color: rgba(0,0,0,0.2)
+    border-top-color: rgba(0, 0, 0, 0.2)
 }
 
 .bootstrap-select.show-menu-arrow.dropup .dropdown-toggle:after {
@@ -213,7 +220,8 @@
     left: auto
 }
 
-.bootstrap-select.show-menu-arrow.open>.dropdown-toggle:before,.bootstrap-select.show-menu-arrow.open>.dropdown-toggle:after {
+.bootstrap-select.show-menu-arrow.open>.dropdown-toggle:before,
+.bootstrap-select.show-menu-arrow.open>.dropdown-toggle:after {
     display: block
 }
 

@@ -1,5 +1,6 @@
 import cv2
 
+# 为了方便模块化设计故使用了全局变量，防止重复赋初值影响检测结果
 thresholdValue = 6
 last_loc_x, last_loc_y, next_loc_x, next_loc_y = 0, 0, 0, 0
 cx, cy = 0, 0
@@ -7,6 +8,7 @@ frame_count = 0
 
 
 def detect_face_orientation(frame):
+    # 每 5 帧检测一次，减少卡顿并提高检测准确率
     global frame_count
     frame_count += 1
     if frame_count % 5 != 0:
@@ -35,11 +37,11 @@ def detect_face_orientation(frame):
             cx, cy = fx + fw // 2, fy + fh // 2
             if (next_loc_x == 0 and next_loc_y == 0) or (
                 cx == 0 and cy == 0
-            ):  # 第一次检测或者检测不到
+            ):  # 第一次检测或者检测不到时
                 last_loc_x, last_loc_y = 0, 0
                 next_loc_x, next_loc_y = cx, cy
 
-            else:  # 非第一次检测
+            else:
                 last_loc_x, last_loc_y = next_loc_x, next_loc_y
                 next_loc_x, next_loc_y = cx, cy
             Hor = next_loc_x - last_loc_x
@@ -65,7 +67,6 @@ if __name__ == "__main__":
     while True:
         # 读取摄像头图像帧
         ret, frame = cap.read()
-
         if not ret:
             break
 
