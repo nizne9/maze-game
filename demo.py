@@ -1,8 +1,8 @@
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
-import uvicorn
 import cv2
+from detector import detect_face_orientation
 
 app = FastAPI()
 
@@ -29,45 +29,36 @@ async def websocket_endpoint(websocket: WebSocket):
     # 打开摄像头
     cap = cv2.VideoCapture(0)
 
-    while True:
-        # 读取摄像头图像帧
-        ret, frame = cap.read()
-        if not ret:
-            break
+    try:
+        while True:
+            # 读取摄像头图像帧
+            ret, frame = cap.read()
 
-        # 检测人脸朝向生成移动指令
-        direction = detect_face_orientation(frame)
+            if not ret:
+                break
+            ret, frame = cap.read()
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            # 显示返回的每帧
+            cv2.imshow("frame", frame)
+            cv2.waitKey(1)
+            # 检测人脸朝向生成移动指令
+            direction = detect_face_orientation(frame)
+            print(direction)
 
-        # 发送移动指令给前端
-        await websocket.send_text(direction)
+            # 发送移动指令给前端
+            await websocket.send_text(direction)
+    except WebSocketDisconnect:
+        # WebSocket连接断开时执行的操作
+        print("WebSocket connection closed")
 
-    # 关闭摄像头和WebSocket连接
-    cap.release()
-    await websocket.close()
+    finally:
+        # 关闭摄像头和WebSocket连接
+        cap.release()
+        cv2.destroyAllWindows()
+        await websocket.close()
 
 
-def detect_face_orientation(frame):
-    # 在这里实现人脸朝向检测算法，根据检测结果生成移动指令
-    # 这里使用示例代码，根据摄像头图像的宽度划分成左右两个区域，检测人脸在哪个区域，然后生成对应的移动指令
-
-    width = frame.shape[1]
-    face_x = width // 2  # 默认人脸在图像中间
-    face_area = width // 4  # 人脸所在区域的宽度
-
-    # 从图像中截取人脸所在区域
-    face_region = frame[:, face_x - face_area // 2 : face_x + face_area // 2, :]
-
-    # 在这里进行人脸朝向检测，根据检测结果生成移动指令
-    # 示例代码中根据人脸所在区域与图像中心的位置关系生成移动指令
-    if face_x < width // 2 - face_area // 4:
-        direction = "left"
-    elif face_x > width // 2 + face_area // 4:
-        direction = "right"
-    else:
-        direction = "up"
-
-    return direction
-
+# uvicorn demo:app --reload
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
