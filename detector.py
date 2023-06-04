@@ -1,29 +1,29 @@
 import cv2
-import dlib
 
-
-thresholdValue = 5
+thresholdValue = 6
 last_loc_x, last_loc_y, next_loc_x, next_loc_y = 0, 0, 0, 0
 cx, cy = 0, 0
+frame_count = 0
 
 
 def detect_face_orientation(frame):
-    # 在这里实现人脸朝向检测算法，根据检测结果生成移动指令
+    global frame_count
+    frame_count += 1
+    if frame_count % 5 != 0:
+        return "unknown"
+
     # 加载人脸方向分类器
-    face_cascade = cv2.CascadeClassifier("MazeGame\haarcascade_frontalface_default.xml")
-    face_direction_cascade = cv2.CascadeClassifier(
-        "MazeGame\haarcascade_frontalface_alt.xml"
-    )
+    face_direction_cascade = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
     # 将图像转换为灰度图像
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
     # 检测人脸
-    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+    faces = face_direction_cascade.detectMultiScale(gray, 1.3, 5)
     global last_loc_x, last_loc_y, next_loc_x, next_loc_y
     global cx, cy
-    # 对于每个检测到的人脸，进行方向分类
-    for x, y, w, h in faces:
-        # 对人脸进行方向分类
+    # 只处理第一个检测到的人脸
+    if len(faces) > 0:
+        x, y, w, h = faces[0]
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
         face_direction = face_direction_cascade.detectMultiScale(
             gray[y : y + h, x : x + w], 1.3, 5
@@ -68,8 +68,6 @@ if __name__ == "__main__":
 
         if not ret:
             break
-        ret, frame = cap.read()
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         # 检测人脸朝向生成移动指令
         direction = detect_face_orientation(frame)

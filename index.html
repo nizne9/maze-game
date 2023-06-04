@@ -1,79 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 
 <head>
-    <title>A Maze Game Based on Face Orientation Detection</title>
-    <style>
-        #game-container {
-            position: relative;
-            width: 1920px;
-            height: 1080px;
-            border: 1px solid black;
-        }
-
-        #ball {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50px;
-            height: 50px;
-            background-color: red;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <title>走迷宫</title>
+    <meta name="keywords" content="走迷宫" />
+    <link href="css/style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="css/bootstrap-min.css" rel="stylesheet">
+    <link href="css/navbar-fixed-top.css" rel="stylesheet">
+    <link href="css/bootstrap-select.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style-a.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.hotkey.js"></script>
 </head>
+<div id="circle"></div>
+<div id="circle1"></div>
 
 <body>
-    <div id="game-container">
-        <div id="ball"></div>
+    <div class="container">
+
+        <div class="centerd">
+            <p>规则：从左上角出发，终点为右下角红旗处。</p>
+            <div id="mg" class="mg centerd"></div>
+            <br />
+            <strong>设置：</strong>
+            <p><input type="checkbox" onclick="mark(1, this);" id="mark1" /> <label for="mark1">将走过的格子用红色标出</label></p>
+
+            <form class="form-inline">
+                <div class="form-group">
+                    宽：<input type="text" class="form-control" id="mg_width" value="20" size="4" maxlength="2"
+                        onkeypress="return isNumber(event)" />
+                </div>
+                <div class="form-group">
+                    高：<input type="text" class="form-control" id="mg_height" value="20" size="4" maxlength="2"
+                        onkeypress="return isNumber(event)" />
+                </div>
+                <button type="button" class="btn btn-default" onclick="new_mg();">生成新迷宫</button>
+            </form>
+        </div>
     </div>
 
+    <script src="js/bootstrap-min.js"></script>
+    <script src="js/bootstrap-select.js"></script>
+    <script src="js/bootstrap-select-min.js"></script>
+    <script src="js/function.js"></script>
+    <script src="js/script.js"></script>
     <script>
-        // 获取游戏容器和小球元素
-        const gameContainer = document.getElementById('game-container');
-        const ball = document.getElementById('ball');
-
-        // 监听后端发送的移动指令
-        const socket = new WebSocket('ws://localhost:8000/ws/move');
-
-        socket.onmessage = (event) => {
-            const direction = event.data;
-
-            // 根据移动指令控制小球的移动
-            if (direction === 'up') {
-                moveUp();
-            } else if (direction === 'down') {
-                moveDown();
-            } else if (direction === 'left') {
-                moveLeft();
-            } else if (direction === 'right') {
-                moveRight();
-            }
-        };
-
-        // 小球向上移动
-        function moveUp() {
-            const top = parseInt(ball.style.top) || 0;
-            ball.style.top = (top - 10) + 'px';
-        }
-
-        // 小球向下移动
-        function moveDown() {
-            const top = parseInt(ball.style.top) || 0;
-            ball.style.top = (top + 10) + 'px';
-        }
-
-        // 小球向左移动
-        function moveLeft() {
-            const left = parseInt(ball.style.left) || 0;
-            ball.style.left = (left - 10) + 'px';
-        }
-
-        // 小球向右移动
-        function moveRight() {
-            const left = parseInt(ball.style.left) || 0;
-            ball.style.left = (left + 10) + 'px';
-        }
+        $(window).load(function () {
+            $("#circle").fadeOut(500);
+            $("#circle1").fadeOut(700);
+        });
     </script>
+    <script>
+        function new_mg() {
+            var w = parseInt(document.getElementById("mg_width").value) || 20,
+                h = parseInt(document.getElementById("mg_height").value) || 20;
+            mg.set({ width: w, height: h }).create().show();
+            document.getElementById("mg_width").value = w;
+            document.getElementById("mg_height").value = h;
+            count();
+        }
+        function count() {
+            $.get("stat/count.py", {
+                r: Math.random()
+            }, function (r) {
+                r = r.replace(/[\r\n\s]/g, "");
+                if (r.match(/^\d+$/))
+                    $("#count").html(r);
+            });
+        }
+        function mark(h, ob) {
+            mg.me.setMark(h, ob.checked);
+        }
+        var mg = new MG("mg");
+        new_mg();
+    </script>
+    <script
+        async>window.onload = function () { var a = document.createElement('script'), b = document.getElementsByTagName('script')[0]; a.type = 'text/javascript', a.async = !0, a.src = '/sw-register.js?v=' + Date.now(), b.parentNode.insertBefore(a, b) };</script>
 </body>
 
 </html>

@@ -36,15 +36,13 @@ async def websocket_endpoint(websocket: WebSocket):
 
             if not ret:
                 break
-            ret, frame = cap.read()
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+            # 检测人脸朝向生成移动指令
+            direction = detect_face_orientation(frame)
             # 显示返回的每帧
             cv2.imshow("frame", frame)
             cv2.waitKey(1)
-            # 检测人脸朝向生成移动指令
-            direction = detect_face_orientation(frame)
             print(direction)
-
             # 发送移动指令给前端
             await websocket.send_text(direction)
     except WebSocketDisconnect:
