@@ -15,8 +15,6 @@
     <script src="js/jquery.js"></script>
     <script src="js/jquery.hotkey.js"></script>
 </head>
-<div id="circle"></div>
-<div id="circle1"></div>
 
 <body>
     <div class="container">
@@ -30,11 +28,11 @@
 
             <form class="form-inline">
                 <div class="form-group">
-                    宽：<input type="text" class="form-control" id="mg_width" value="20" size="4" maxlength="2"
+                    宽：<input type="text" class="form-control" id="mg_width" value="10" size="4" maxlength="2"
                         onkeypress="return isNumber(event)" />
                 </div>
                 <div class="form-group">
-                    高：<input type="text" class="form-control" id="mg_height" value="20" size="4" maxlength="2"
+                    高：<input type="text" class="form-control" id="mg_height" value="10" size="4" maxlength="2"
                         onkeypress="return isNumber(event)" />
                 </div>
                 <button type="button" class="btn btn-default" onclick="new_mg();">生成新迷宫</button>
@@ -47,12 +45,7 @@
     <script src="js/bootstrap-select-min.js"></script>
     <script src="js/function.js"></script>
     <script src="js/script.js"></script>
-    <script>
-        $(window).load(function () {
-            $("#circle").fadeOut(500);
-            $("#circle1").fadeOut(700);
-        });
-    </script>
+
     <script>
         function new_mg() {
             var w = parseInt(document.getElementById("mg_width").value) || 20,
@@ -78,7 +71,7 @@
         new_mg();
     </script>
     <script
-        async>window.onload = function () { var a = document.createElement('script'), b = document.getElementsByTagName('script')[0]; a.type = 'text/javascript', a.async = !0, a.src = '/sw-register.js?v=' + Date.now(), b.parentNode.insertBefore(a, b) };</script>
+        async>window.onload = function () { var a = document.createElement('script'), b = document.getElementsByTagName('script')[0]; a.type = 'text/javascript', a.async = !0, b.parentNode.insertBefore(a, b) };</script>
 </body>
 
 </html>

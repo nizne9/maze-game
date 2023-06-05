@@ -262,10 +262,6 @@ MG_Me.prototype = {
         $.hotkeys.add("left", function () {
             _this.move(3);
         });
-        setTimeout(function () {
-            if (_this.mg.isMoved) return;
-            _this.inform("提示：您可以使用键盘上的上丶下丶左丶右方向键控制我的移动。");
-        }, 3000);
 
         this.itvl = setInterval(function () {
             if (!_this.mg.isMoved) return;
@@ -302,13 +298,6 @@ MG_Me.prototype = {
         this.history.unshift(p);
         if (this.mg.markHistory)
             this.mg.gridOb[this.history[0]].style.backgroundColor = "#fcc";
-        /*if (this.history2[0] == p) {
-            this.history2.shift();
-        } else {
-            if (this.mg.markHistory2)
-                this.mg.gridOb[this.history2[0]].style.backgroundColor = "#f99";
-            this.history2.unshift(p);
-        }*/
         var x = p % this.mg.w,
             y = Math.floor(p / this.mg.w),
             top = y * this.mg.gridSize + "px",
@@ -323,16 +312,13 @@ MG_Me.prototype = {
             _this.isMoving = false;
             var v = _this.mg.grids[p];
             if (p == _this.mg.grids.length - 1) {
-                _this.inform("YEAH~!<br /> 到终点啦~！");
+                _this.inform("恭喜你到终点了！");
                 _this.finished = true;
-                _this.setEmotion("happy");
                 clearInterval(_this.itvl);
             } else if (p != 0 && (v == 1 || v == 2 || v == 4 || v == 8)) {
-                _this.inform("哎呀，好像走进死胡同了！");
-                _this.setEmotion("unhappy");
+                _this.inform("走进死胡同了！");
             } else if (p == 0) {
-                _this.inform("咦，我怎么又回到起点了？");
-                _this.setEmotion("surprised");
+                _this.inform("回到起点了？");
             }
         });
     },
