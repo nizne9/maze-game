@@ -5,9 +5,7 @@ import dlib
 
 # 初始化 dlib 的面部检测器和姿态估计器
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor(
-    "D:\python_work\MazeGame\shape_predictor_68_face_landmarks.dat"
-)
+predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 myaw = []
 mpitch = []
 mroll = []
