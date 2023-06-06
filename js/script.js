@@ -203,7 +203,7 @@ function MG_Me(mg) {
     this.lastMove = new Date();
     this.finished = false;
     this.emotions = {
-        normal: "img/me.gif",
+        normal: "images/me.gif",
         happy: "img/me_happy.gif",
         unhappy: "img/me_unhappy.gif",
         surprised: "img/me_surprised.gif",
@@ -226,7 +226,7 @@ MG_Me.prototype = {
         this.informSpan = tmpSpan;
         tmpInfo.appendChild(tmpSpan);
         tmpOb.appendChild(tmpInfo);
-        tmpImg.setAttribute("src", "img/me.gif");
+        tmpImg.setAttribute("src", "images/me.gif");
         this.meImg = tmpImg;
         tmpOb.setAttribute("class", "me");
         tmpOb.setAttribute("className", "me");
@@ -262,15 +262,6 @@ MG_Me.prototype = {
         $.hotkeys.add("left", function () {
             _this.move(3);
         });
-
-        this.itvl = setInterval(function () {
-            if (!_this.mg.isMoved) return;
-            var now = new Date();
-            if (now - _this.lastMove > 10000) {
-                _this.inform("Hello?");
-                _this.setEmotion("surprised");
-            }
-        }, 3000);
 
         this.setMark(1, this.mg.markHistory);
         //this.setMark(2, this.mg.markHistory2);
