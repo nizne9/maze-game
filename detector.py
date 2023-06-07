@@ -96,7 +96,7 @@ def detect_face_orientation(image):
         direction = "right"
     elif yaw > 10 and roll < 5:
         direction = "left"
-    elif -160 < pitch < -170 or roll > 5:
+    elif -160 < pitch < -180 or roll > 5:
         direction = "down"
     elif 160 < pitch < 170:
         direction = "up"
