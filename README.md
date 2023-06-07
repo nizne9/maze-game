@@ -2,6 +2,10 @@
 ## 依赖
 TODO
 ## 使用方法
+* 下载项目
+```bash
+git clone https://github.com/nizne9/MazeGame.git
+```
 * 切换到此目录下
 * 下载所需的包
 ```bash
@@ -15,5 +19,5 @@ conda activate your_env_name
 ```bash
 uvicorn demo:app --reload
 ```
-* 从浏览器打开文件 `index.html`
+* 浏览器打开网址 `localhost:8000/index.html`
 * 进行游玩
