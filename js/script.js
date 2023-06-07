@@ -242,11 +242,11 @@ MG_Me.prototype = {
             // 根据移动指令控制小球的移动
             if (direction === 'up') {
                 _this.move(0);
-            } else if (direction === 'down') {
-                _this.move(1);
-            } else if (direction === 'left') {
-                _this.move(2);
             } else if (direction === 'right') {
+                _this.move(1);
+            } else if (direction === 'down') {
+                _this.move(2);
+            } else if (direction === 'left') {
                 _this.move(3);
             }
         };
