@@ -1,4 +1,3 @@
-import math
 import cv2
 import numpy as np
 import dlib
@@ -6,9 +5,7 @@ import dlib
 # 初始化 dlib 的面部检测器和姿态估计器
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
-myaw = []
-mpitch = []
-mroll = []
+
 
 # 3D模型的3D关键点坐标（基于dlib关键点索引）
 model_points = [
@@ -81,13 +78,7 @@ def detect_face_orientation(image):
     # 提取欧拉角中的偏航、俯仰和滚转角度
     yaw = euler_angles[0][1]  # Y 轴
     pitch = euler_angles[0][0]  # X 轴
-    roll = euler_angles[0][2]  # Z 轴
-
-    myaw.append(yaw)
-    mpitch.append(pitch)
-    mroll.append(roll)
-
-    # 判断头的朝向
+    roll = euler_angles[0][2]  # Z     # 判断头的朝向
     if yaw < 20 and yaw > -20 and (-170 < pitch < -180 or 170 < pitch < 180):
         direction = "center"
     elif yaw < -10 and roll < -5:
