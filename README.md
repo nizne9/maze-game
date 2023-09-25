@@ -2,12 +2,12 @@
 ## 使用方法
 * 下载项目
 ```bash
-git clone https://github.com/nizne9/MazeGame.git
+git clone https://github.com/nizne9/maze-game.git
 ```
 * 切换到此目录下
 * 下载所需的包
 ```bash
-conda env create -f MazeGame.yaml -n your_env_name
+conda env create -f maze-game.yaml -n your_env_name
 ```
 * 启动虚拟环境
 ```bash
